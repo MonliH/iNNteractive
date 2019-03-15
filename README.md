@@ -9,3 +9,16 @@ The neural network was implemented using Google’s Tensorflow API and the Keras
 * Tensorflow
 * Keras
 * Numpy
+
+To install the python modules run:
+
+```> pip install matplotlib
+
+> pip install tensorflow
+
+> pip install keras
+
+> pip install numpy
+
+```
+In your terminal if on windows, make sure you have Python 3 put in your path. If on any unix os, use `pip3` instead of `pip`
