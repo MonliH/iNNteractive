@@ -15,6 +15,7 @@ This program will generate a neural netowrk to fit any function that you give it
 * Status bar for training
 * Log files (loss, structure of neural network, time etc.)
 
+I suggest you play around with the program as it is quite intivtive to use. The function syntax is the normal python syntax (e.g. power is `**` and there is `sin(x)`, `cos(x)`, `tan(x)`).
 
 # Dependencies
 * Python 3
@@ -36,5 +37,7 @@ To install the python modules run:
 
 ```
 In your terminal if on windows, make sure you have Python 3 put in your path. If on any unix os, use `pip3` instead of `pip`
+
+# Screenshots
 
 
