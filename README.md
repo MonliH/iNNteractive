@@ -66,7 +66,7 @@ With the power of MatplotLib, It is possiable to change the color theme of the i
 Programmed in python, Tensorflow made by Google is the brain behind the neural network and is trusted by millions around the globe. Other libaries used include: Numpy, Matplotlib, and Tkinter.
     </td>
     <td>
-      <img src="https://banner2.kisspng.com/20180805/ipw/kisspng-tensorflow-artificial-intelligence-brand-logo-lear-rapidswitch-nvidia-powered-servers-5b6715663b0830.0909969615334823422418.jpg">
+      <img src="https://www.tensorflow.org/images/tf_logo_social.png">
     </td>
   </tr>
 </table>
