@@ -39,5 +39,10 @@ To install the python modules run:
 In your terminal if on windows, make sure you have Python 3 put in your path. If on any unix os, use `pip3` instead of `pip`
 
 # Screenshots
-
+![](images/screenshot3.png)
+![](images/screenshot4.png)
+![](images/screenshot5.png)
+![](images/screenshot6.png)
+![](images/screenshot1.png)
+![](images/screenshot2.png)
 
