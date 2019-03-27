@@ -8,7 +8,7 @@ The neural network was implemented using Google’s Tensorflow API and the Keras
   <tr>
     <td width="50%" valign="top">
 <h3>Data Generation</h3>
-Using Numpy, the training data can be automaticaly generated given a base function. The function takes the input x and y, then manipulates the values. On the right is the graph of `x**2+y**2`. THe range and the resolution of the function can be ajusted using user-friendly sliders.
+Using Numpy, the training data can be automaticaly generated given a base function. The function takes the input x and y, then manipulates the values. On the right is the graph of <code>x**2+y**2</code>. THe range and the resolution of the function can be ajusted using user-friendly sliders.
     </td>
     <td>
       <img src="images/screenshot3.png">
