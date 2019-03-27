@@ -102,3 +102,13 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Debug files
+debug.log
+
+# Pycharm Files
+.idea/*
+
+# Test Files
+/sin_imgs/*
+/sin_imgs_new/*

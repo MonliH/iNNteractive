@@ -18,6 +18,13 @@ print("Program By: Jonathan Li\n")
 __author__ = "Jonathan LI"
 
 
+def grow_function(x):
+    if x <= 600:
+        return round(x**2*0.01 - x**2*0.0095)
+    elif x > 600:
+        return grow_function(600)
+
+
 def write_log(text):
     print(text)
     filename = "debug.log"
@@ -248,14 +255,11 @@ def make_model(data, labels):
     global values_nn
     model_layers = []
 
-    string_text_output = "Layer {}, Number of Neurons in This Layer: {}, Activation: {}\n"
     for i, layer_val in enumerate(nn_layers):
         if i == 0:
             model_layers.append(layers.Dense(layer_val["neurons"], activation=layer_val["activation"], input_dim=2))
-            write_log("\n" + string_text_output.format(i+1, layer_val["neurons"], layer_val["activation"]))
         elif i > 0:
             model_layers.append(layers.Dense(layer_val["neurons"], activation=layer_val["activation"]))
-            write_log(string_text_output.format(i+1, layer_val["neurons"], layer_val["activation"]))
 
     model_layers.append(layers.Dense(1, activation="elu"))
     model = tf.keras.Sequential(model_layers)
@@ -263,12 +267,6 @@ def make_model(data, labels):
     model.compile(optimizer=values_nn[0],
                   loss=values_nn[1],
                   metrics=['accuracy'])
-    write_log("Optimizer: {}\nLoss Function: {}".format(values_nn[0], values_nn[1]))
-
-    # Trains for 5 epochs
-    history = model.fit(data, labels, batch_size=100, epochs=10, steps_per_epoch=200)
-    write_log("\nTraining Took {} seconds\n".format(time.time() - start_time))
-    #write_log("Final loss: {}\n\n".format(history.history["loss"][-1]))
     return model
 
 
@@ -280,7 +278,7 @@ def get_equation():
 def make_graph(x, y, model):
     inputs = []
     for i in range(len(x)):
-        for j in range(len(x)):
+        for j in range(len(y)):
             inputs.append([x[i][j], y[i][j]])
 
     inputs = np.array(inputs)
@@ -290,7 +288,7 @@ def make_graph(x, y, model):
     for i in range(len(inputs)):
         predictions.append(model.predict([[inputs[i]+resolution.get()/2]]))
 
-    return np.array(predictions), inputs
+    return np.array(predictions), np.hsplit(inputs, 2)[0], np.hsplit(inputs, 2)[1]
 
 
 def make_function(axis, x):
@@ -309,15 +307,31 @@ def make_function(axis, x):
     return np.array(final)
 
 
+def do_photo(data, labels, x, y, model):
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    number_font = {"fontname": "Courier New"}
+    for i in range(0, 1000):
+        ax.set_zlim3d(0, 5)
+        history = model.fit(data, labels, batch_size=len(x), epochs=1, steps_per_epoch=5)
+        z, x_o, y_o = make_graph(x, y, model)
+        ax.plot_trisurf(x.flatten(), y.flatten(), z.flatten(), cmap=get_cm(color_values[style_nn.current()]))
+        plt.suptitle("Loss: {:.10f}\nStep: {: 5d}".format(history.history["loss"][-1], i*5), fontsize=20, **number_font)
+        plt.savefig(f"sin_imgs_new/img{i:06}.png", dpi=400)
+        ax.cla()
+
+    quit()
+
+
 def go():
     amt_moise = noise.get()
     size_loc = size.get()
     res = resolution.get()
-    equation = get_equation()
+    equation = "sin(x*3)+sin(y*3)+2.5"
     use_nn_bool = use_or_not.get()
     
     write_log("Amount of Noise: {}\nResolution: {}\nEquation: {}\nSize: {}\n\n". format(amt_moise, res, equation, size_loc))
-    x, y, z, plot = plot_data(amt_moise, size_loc, res, equation, wireframe=wireframe_bool.get(), points=use_or_show_data_points_bool.get())
+    x, y, z, plot = plot_data(amt_moise, size_loc, res, equation, wireframe=False, points=False)
     if use_nn_bool == 1:
         label6.config(text="Status: Generating Data Points")
         progress_bar.step(20)
@@ -329,6 +343,7 @@ def go():
         root.update()
 
         model = make_model(data, labels)
+        do_photo(data, labels, x, y, model)
 
         label6.config(text="Status: Making Graph From AI")
         progress_bar.step(25)
@@ -339,7 +354,6 @@ def go():
         global color_values
         ax.plot_trisurf(x.flatten(), y.flatten(), z_pre.flatten(), cmap=get_cm(color_values[style_nn.current()]))
         data_t, labels_t = get_data(x, y, z)
-        write_log("Total loss: {}\n---------------------------------\n\n".format(model.evaluate(data_t, labels_t)[0]))
         label6.config(text="Status: Done!")
         progress_bar.step(5)
 
@@ -384,7 +398,7 @@ use_or_show_data_points_bool = tk.IntVar()
 show_data_points = ttk.Checkbutton(settings, text="Show data points", variable=use_or_show_data_points_bool, command=toggle_show_points)
 
 wireframe_bool = tk.IntVar()
-use_wireframe = ttk.Checkbutton(settings, text="Use surface to show points (experimental)", variable=wireframe_bool, command=toggle_surface_menu)
+use_wireframe = ttk.Checkbutton(settings, text="Use surface to show points (experimental) don't use", variable=wireframe_bool, command=toggle_surface_menu)
 
 label5 = ttk.Label(settings, text="Enter the theme for graph:")
 style = ttk.Combobox(settings, values=color_values, state='readonly')
