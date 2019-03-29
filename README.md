@@ -37,7 +37,7 @@ Creating noise in training data allows more reliable and realistic results. The 
       <img src="images/screenshot6.png">
     </td>
     <td valign="top">
-<h3>Overlay Training Data With Neural Netowrk Prediction</h3>
+<h3>Overlay Training Data With Neural Network Prediction</h3>
 This feature allows the output from the neural network and the real function to be compared easily.
     </td>
   </tr>
@@ -57,13 +57,13 @@ With some Keras magic, the structure of the neural network, the activation funct
     </td>
     <td valign="top">
 <h3>Change Theme Of Interactive Graph</h3>
-With the power of MatplotLib, It is possiable to change the color theme of the interactive 3D graph. This feature is useful for comparing the output of the neural netowrk to the real function given.
+With the power of MatplotLib, It is possible to change the color theme of the interactive 3D graph. This feature is useful for comparing the output of the neural network to the real function given.
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
 <h3>Built On Tools You Trust!</h3>
-Programmed in python, Tensorflow made by Google is the brain behind the neural network and is trusted by millions around the globe. Other libaries used include: Numpy, Matplotlib, and Tkinter.
+Programmed in python, Tensorflow and Keras made by Google is the brain behind the neural network and is trusted by millions around the globe. Other libaries used include: Numpy, Matplotlib, and Tkinter.
     </td>
     <td>
       <img src="https://www.tensorflow.org/images/tf_logo_social.png">
