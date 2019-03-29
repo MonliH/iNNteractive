@@ -78,7 +78,7 @@ Other Features:
 * Log files (loss, structure of neural network, time etc.)
 
 
-I suggest you play around with the program as it is quite intivtive to use. The function syntax is the normal python syntax (e.g. power is `**` and there is `sin(x)`, `cos(x)`, `tan(x)`).
+I suggest you play around with the program as it is quite intivtive to use. The syntax when entering in functions is the normal python syntax (e.g. power is `**` and there is `sin(x)`, `cos(x)`, `tan(x)`).
 
 # Dependencies
 * Python 3
