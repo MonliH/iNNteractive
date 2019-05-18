@@ -1,7 +1,7 @@
 # iNNteractive
 Interactive neural network with a GUI interface. Programmed in python 3.6
 
-The neural network was implemented using Google’s Tensorflow API and the Keras API. The plotting was done through the Matplotlib module for Python. The builtin tkinter module was used to create the user interface. The Numpy module was used to generate the training data. The python file itself is about 400 lines long. This program will generate a neural netowrk to fit any function that you give it.
+The neural network was implemented using Google’s Tensorflow API and the Keras API. The plotting was done through the Matplotlib module for Python. The builtin tkinter module was used to create the user interface. The Numpy module was used to generate the training data. The python file itself is about 320 lines long without whitespace. This program will generate a neural netowrk to fit any function that you give it.
 
 # Features
 <table>
