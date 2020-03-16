@@ -14,9 +14,6 @@ from matplotlib import cm
 import keras
 import time
 
-print("Program By: Jonathan Li\n")
-__author__ = "Jonathan LI"
-
 
 def write_log(text):
     print(text)
@@ -266,7 +263,7 @@ def make_model(data, labels):
     write_log("Optimizer: {}\nLoss Function: {}".format(values_nn[0], values_nn[1]))
 
     # Trains for 5 epochs
-    history = model.fit(data, labels, batch_size=100, epochs=10, steps_per_epoch=200)
+    history = model.fit(data, labels, batch_size=100, epochs=10, steps_per_epoch=1000)
     write_log("\nTraining Took {} seconds\n".format(time.time() - start_time))
     #write_log("Final loss: {}\n\n".format(history.history["loss"][-1]))
     return model

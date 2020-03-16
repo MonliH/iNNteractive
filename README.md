@@ -1,7 +1,14 @@
 # iNNteractive
-Interactive neural network with a GUI interface. Programmed in python 3.6
+**interactive neural networks with a GUI interface.**
 
-The neural network was implemented using Google’s Tensorflow API and the Keras API. The plotting was done through the Matplotlib module for Python. The builtin tkinter module was used to create the user interface. The Numpy module was used to generate the training data. The python file itself is about 320 lines long without whitespace. This program will generate a neural netowrk to fit any function that you give it.
+# Usage
+
+```bash
+pip3 install -r requirements.txt
+python3 main.py
+```
+
+Not tested on windows, but theoretically it should work.
 
 # Features
 <table>
@@ -63,7 +70,7 @@ With the power of MatplotLib, It is possible to change the color theme of the in
   <tr>
     <td width="50%" valign="top">
 <h3>Built On Tools You Trust!</h3>
-Programmed in python, Tensorflow and Keras made by Google is the brain behind the neural network and is trusted by millions around the globe. Other libaries used include: Numpy, Matplotlib, and Tkinter.
+Programmed in Python 3, Tensorflow and Keras made by Google is the brain behind the neural network and is trusted by millions around the globe. Other libaries used include: Numpy, Matplotlib, and Tkinter.
     </td>
     <td>
       <img src="https://www.tensorflow.org/images/tf_logo_social.png">
@@ -75,31 +82,8 @@ Programmed in python, Tensorflow and Keras made by Google is the brain behind th
 Other Features:
 * An interactive graph to visualize the training data and the neural network output
 * Status bar for training
-* Log files (loss, structure of neural network, time etc.)
+* Log files
 
 
-I suggest you play around with the program as it is quite intivtive to use. The syntax when entering in functions is the normal python syntax (e.g. power is `**` and there is `sin(x)`, `cos(x)`, `tan(x)`).
-
-# Dependencies
-* Python 3
-* Matplotlib
-* Tensorflow
-* Keras
-* Numpy
-
-To install the python modules run:
-
-```
-> pip install matplotlib
-
-> pip install tensorflow
-
-> pip install keras
-
-> pip install numpy
-```
-
-In your terminal if on windows, make sure you have Python 3 put in your path. If on any unix os, use `pip3` instead of `pip`
-
-Not tested on windows. Desgned for MacOS. Theoretically it should work on windows but im not sure.
+Play around with the program as it is quite intivtive to use. The syntax when entering in functions is the normal python syntax (e.g. power is `**` and there is `sin(x)`, `cos(x)`, `tan(x)`).
 
