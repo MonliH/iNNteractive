@@ -1,5 +1,5 @@
 # iNNteractive
-**interactive neural networks with a GUI interface.**
+**interactive neural networks with a GUI.**
 
 # Usage
 
