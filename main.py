@@ -1,9 +1,7 @@
 # Big list of imports
 import tkinter as tk
-from tkinter import DISABLED, NORMAL
 from tkinter import ttk
 import numpy as np
-from numpy import sin, cos, tan
 import matplotlib
 matplotlib.use("TkAgg")
 import matplotlib.pyplot as plt
@@ -11,7 +9,6 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
-import keras
 import time
 
 
@@ -154,6 +151,7 @@ def show_layer():
 
 
 def f(x, y, equation=lambda: get_equation()):
+    from numpy import sin, cos, tan, exp, log, sqrt, pi
     return eval(equation)
 
 
@@ -182,9 +180,11 @@ def toggle_loadingbar():
         label7.grid(row=13)
         style_nn.grid(row=14)
         change_nn.grid(padx=pad_x, pady=pad_y, row=15)
-        # stats.grid()
-        label6.grid(row=19)
-        progress_bar.grid(row=20)
+        label8.grid(row=17)
+        inference_range.grid(row=18)
+
+        label6.grid(row=21)
+        progress_bar.grid(row=22)
         root.update()
         settings.update()
 
@@ -192,6 +192,8 @@ def toggle_loadingbar():
         label7.grid_forget()
         style_nn.grid_forget()
         change_nn.grid_forget()
+        label8.grid_forget()
+        inference_range.grid_forget()
         # stats.grid_forget()
         label6.grid_forget()
         progress_bar.grid_forget()
@@ -263,9 +265,12 @@ def make_model(data, labels):
     write_log("Optimizer: {}\nLoss Function: {}".format(values_nn[0], values_nn[1]))
 
     # Trains for 5 epochs
-    history = model.fit(data, labels, batch_size=100, epochs=10, steps_per_epoch=1000)
+    batch_size = 100
+    ds = tf.data.Dataset.from_tensor_slices((data, labels))
+    ds = ds.batch(batch_size)
+    ds = ds.repeat()
+    model.fit(ds, batch_size=batch_size, epochs=10, steps_per_epoch=1000)
     write_log("\nTraining Took {} seconds\n".format(time.time() - start_time))
-    #write_log("Final loss: {}\n\n".format(history.history["loss"][-1]))
     return model
 
 
@@ -274,20 +279,11 @@ def get_equation():
     return code
 
 
-def make_graph(x, y, model):
-    inputs = []
-    for i in range(len(x)):
-        for j in range(len(x)):
-            inputs.append([x[i][j], y[i][j]])
+def make_graph(x_range, y_range, model):
+    inputs = np.array(np.meshgrid(x_range, y_range)).T.reshape(-1,2)
+    predictions = model.predict_on_batch(inputs)
 
-    inputs = np.array(inputs)
-    predictions = []
-    loss_list = []
-
-    for i in range(len(inputs)):
-        predictions.append(model.predict([[inputs[i]+resolution.get()/2]]))
-
-    return np.array(predictions), inputs
+    return predictions, inputs
 
 
 def make_function(axis, x):
@@ -331,10 +327,13 @@ def go():
         progress_bar.step(25)
         root.update()
 
-        z_pre, inputs = make_graph(x, y, model)
+        additional = inference_range.get()
+        new_x = np.arange(-size_loc-additional, size_loc+additional, max(0.2, res))
+        new_y = np.arange(-size_loc-additional, size_loc+additional, max(0.2, res))
+        z_pre, inputs = make_graph(new_x, new_y, model)
         ax = plot.gca(projection='3d')
         global color_values
-        ax.plot_trisurf(x.flatten(), y.flatten(), z_pre.flatten(), cmap=get_cm(color_values[style_nn.current()]))
+        ax.plot_trisurf(inputs[:, 0], inputs[:, 1], z_pre.flatten(), cmap=get_cm(color_values[style_nn.current()]))
         data_t, labels_t = get_data(x, y, z)
         write_log("Total loss: {}\n---------------------------------\n\n".format(model.evaluate(data_t, labels_t)[0]))
         label6.config(text="Status: Done!")
@@ -347,7 +346,7 @@ def go():
 
 
 nn_layers = [{"activation": "elu", "neurons": 64}, {"activation": "elu", "neurons": 128}, {"activation": "elu", "neurons": 64}]
-values_nn = ["Adadelta", "logcosh"]
+values_nn = ["Adam", "mean_squared_error"]
 output_console = ""
 color_values = ["rainbow", "RdBu", "viridis", "plasma", "magma", "jet", ]
 
@@ -394,6 +393,9 @@ label7 = ttk.Label(settings, text="Enter the theme for neural network graph:")
 style_nn = ttk.Combobox(settings, values=color_values, state='readonly')
 style_nn.set("jet")
 
+label8 = ttk.Label(settings, text="Set the additional inference range:")
+inference_range = ttk.Scale(settings, from_=0.0, to=5, value=0)
+
 go_button = ttk.Button(settings, text="GO!", command=go)
 
 stats = ttk.Button(settings, text="Show Stats")
@@ -412,7 +414,7 @@ size.grid(padx=pad_x, pady=pad_y, row=9)
 label4.grid(padx=pad_x, pady=pad_y, row=10)
 resolution.grid(padx=pad_x, pady=pad_y, row=11)
 show_nn.grid(padx=pad_x, pady=pad_y, row=12)
-go_button.grid(padx=pad_x, pady=pad_y, row=17)
+go_button.grid(padx=pad_x, pady=pad_y, row=20)
 settings.grid()
 
 root.mainloop()
